@@ -4,10 +4,10 @@
 Project West Lake参考固件是在标准的OpenWRT固件基础上定制的，针对HLK-7628N模块的，带有Mesh功能的一款固件。固件预装了Mesh相关的应用软件，并且默认配置了AP和Mesh功能。
 
 * 配置与功能
-** 无线AP的ESSID为“Project West Lake”，密码为projwestlake
-** 路由器的IP为10.20.0.1，子网掩码为255.255.0.0
-** 无登录密码（ssh和web界面）
-** 预装batman-adv相关软件包
+- 无线AP的ESSID为“Project West Lake”，密码为projwestlake
+- 路由器的IP为10.20.0.1，子网掩码为255.255.0.0
+- 无登录密码（ssh和web界面）
+- 预装batman-adv相关软件包
 
 * 构建方式
 假定在Debian 10上构建固件，若是其他Linux发行版，可参考OpenWRT官方文档（见后面的参考）进行适当调整，或者通过准备一个Debian 10的chroot环境，具体见下面的“环境准备”部分。
@@ -53,7 +53,7 @@ git checkout v19.07.3
 注意，如果当前是root用户（例如，通过chroot），建议切换到普通用户进行操作。
 
 然后通过下列命令更新软件源（feeds）：
-+begin_src sh
+#+begin_src sh
 ./script/feeds update -a
 ./script/feeds install -a
 #+end_src
