@@ -286,7 +286,6 @@ make download
 : ./bin/targets/ramips/mt76x8/openwrt-19.07.3-ramips-mt76x8-hilink_hlk-7628n-squashfs-sysupgrade.bin
 
 * 参考
-* refs
 - https://openwrt.org/docs/guide-developer/build-system/use-buildsystem
 - https://openwrt.org/docs/guide-user/additional-software/beginners-build-guide
 - https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
