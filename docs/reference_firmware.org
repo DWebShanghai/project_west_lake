@@ -242,17 +242,17 @@ config interface 'nwi_mesh0'
 文件wireless的内容如下：
 #+begin_src
 config wifi-device 'radio0'
-	option type 'mac80211'
-	option channel '11'
-	option path 'platform/10300000.wmac'
-	option hwmode '11ng'
+  option type 'mac80211'
+  option channel '11'
+  option path 'platform/10300000.wmac'
+  option hwmode '11ng'
 
 config wifi-iface 'default_radio0'
-	option device 'radio0'
-	option network 'lan'
-	option mode 'ap'
-	option ssid 'Project West Lake'
-	option encryption 'psk2'
+  option device 'radio0'
+  option network 'lan'
+  option mode 'ap'
+  option ssid 'Project West Lake'
+  option encryption 'psk2'
   option key 'projwestlake'
   option ieee80211r '1'
   option mobility_domain 'baad'
@@ -260,15 +260,15 @@ config wifi-iface 'default_radio0'
   option pmk_r1_push '1'
 
 config wifi-iface 'mesh0'
-	option device 'radio0'
-	option ifname 'mesh0'
-	option network 'nwi_mesh0'
-	option mode 'mesh'
-	option mesh_fwding '0'
-	option mesh_id 'mesh_openwrt'
-	option key 'vfrgj1235'
-	option mesh_rssi_threshold '0'
-	option encryption 'sae'
+  option device 'radio0'
+  option ifname 'mesh0'
+  option network 'nwi_mesh0'
+  option mode 'mesh'
+  option mesh_fwding '0'
+  option mesh_id 'mesh_openwrt'
+  option key 'vfrgj1235'
+  option mesh_rssi_threshold '0'
+  option encryption 'sae'
 #+end_src
 
 ** 构建
@@ -284,3 +284,9 @@ make download
 
 构建的结果在子目录bin下面，可用来更新的固件位于如下路径：
 : ./bin/targets/ramips/mt76x8/openwrt-19.07.3-ramips-mt76x8-hilink_hlk-7628n-squashfs-sysupgrade.bin
+
+* 参考
+* refs
+- https://openwrt.org/docs/guide-developer/build-system/use-buildsystem
+- https://openwrt.org/docs/guide-user/additional-software/beginners-build-guide
+- https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
