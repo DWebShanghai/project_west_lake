@@ -1,0 +1,67 @@
+#+title: 参考固件
+
+* 概述
+Project West Lake参考固件是在标准的OpenWRT固件基础上定制的，针对HLK-7628N模块的，带有Mesh功能的一款固件。固件预装了Mesh相关的应用软件，并且默认配置了AP和Mesh功能。
+
+* 配置与功能
+** 无线AP的ESSID为“Project West Lake”，密码为projwestlake
+** 路由器的IP为10.20.0.1，子网掩码为255.255.0.0
+** 无登录密码（ssh和web界面）
+** 预装batman-adv相关软件包
+
+* 构建方式
+假定在Debian 10上构建固件，若是其他Linux发行版，可参考OpenWRT官方文档（见后面的参考）进行适当调整，或者通过准备一个Debian 10的chroot环境，具体见下面的“环境准备”部分。
+
+** 环境准备
+*** chroot环境的准备
+若已经是Debian 10的环境，则跳过本部分。
+
+通过debootstrap命令，生成一个Debian 10的chroot系统，下列命令均使用root用户运行：
+#+begin_src sh
+mkdir debian_10
+debootstrap stable ./debian_10 http://mirrors.163.com/debian/
+#+end_src
+
+下面通过chroot命令，进入到Debian 10环境：
+#+begin_src sh
+chroot ./debian_10 /bin/bash
+export PATH=/bin:/usr/bin:/sbin:/usr/sbin
+source /ect/profile
+#+end_src
+
+*** 安装依赖
+通过下列命令，安装构建OpenWRT固件过程中需要用到的软件：
+#+begin_src sh
+apt-get install \
+  subversion g++ zlib1g-dev build-essential git python python3 \
+  python3-distutils libncurses5-dev gawk gettext unzip file \
+  libssl-dev wget libelf-dev ecj fastjar java-propose-classpath
+
+apt-get install pkg-config
+#+end_src
+
+如果有什么问题，具体可以参考 https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
+
+*** OpenWRT代码及相关资源的下载
+下载OpenWRT源代码，并切换到稳定版本：
+#+begin_src sh
+git clone https://git.openwrt.org/openwrt/openwrt.git
+cd openwrt
+git checkout v19.07.3
+#+end_src
+
+注意，如果当前是root用户（例如，通过chroot），建议切换到普通用户进行操作。
+
+然后通过下列命令更新软件源（feeds）：
++begin_src sh
+./script/feeds update -a
+./script/feeds install -a
+#+end_src
+
+最后下载HLK-7628N模块的默认配置：
+#+begin_src sh
+wget https://downloads.openwrt.org/releases/19.07.3/targets/ramips/mt76x8/config.buildinfo -O .config
+#+end_src
+
+** 配置
+** 构建
