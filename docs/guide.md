@@ -1,0 +1,291 @@
+#+title: 参考固件
+
+* 概述
+Project West Lake参考固件是在标准的OpenWRT固件基础上定制的，针对HLK-7628N模块的，带有Mesh功能的一款固件。固件预装了Mesh相关的应用软件，并且默认配置了AP和Mesh功能。
+
+* 配置与功能
+- 无线AP的ESSID为“Project West Lake”，密码为projwestlake
+- 路由器的IP为10.20.0.1，子网掩码为255.255.0.0
+- 无登录密码（ssh和web界面）
+- 预装batman-adv相关软件包
+
+* 构建方式
+假定在Debian 10上构建固件，若是其他Linux发行版，可参考OpenWRT官方文档（见后面的参考）进行适当调整，或者通过准备一个Debian 10的chroot环境，具体见下面的“环境准备”部分。
+
+** 环境准备
+*** chroot环境的准备
+若已经是Debian 10的环境，则跳过本部分。
+
+通过debootstrap命令，生成一个Debian 10的chroot系统，下列命令均使用root用户运行：
+#+begin_src sh
+mkdir debian_10
+debootstrap stable ./debian_10 http://mirrors.163.com/debian/
+#+end_src
+
+下面通过chroot命令，进入到Debian 10环境：
+#+begin_src sh
+chroot ./debian_10 /bin/bash
+export PATH=/bin:/usr/bin:/sbin:/usr/sbin
+source /etc/profile
+#+end_src
+
+*** 安装依赖
+通过下列命令，安装构建OpenWRT固件过程中需要用到的软件：
+#+begin_src sh
+apt-get install \
+  subversion g++ zlib1g-dev build-essential git python python3 \
+  python3-distutils libncurses5-dev gawk gettext unzip file \
+  libssl-dev wget libelf-dev ecj fastjar java-propose-classpath
+
+apt-get install pkg-config
+#+end_src
+
+如果有什么问题，具体可以参考 https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
+
+*** OpenWRT代码及相关资源的下载
+下载OpenWRT源代码，并切换到稳定版本：
+#+begin_src sh
+git clone https://git.openwrt.org/openwrt/openwrt.git
+cd openwrt
+git checkout v19.07.3
+#+end_src
+
+注意，如果当前是root用户（例如，通过chroot），建议切换到普通用户进行操作。
+
+然后通过下列命令更新软件源（feeds）：
+#+begin_src sh
+./script/feeds update -a
+./script/feeds install -a
+#+end_src
+
+最后下载HLK-7628N模块的默认配置：
+#+begin_src sh
+wget https://downloads.openwrt.org/releases/19.07.3/targets/ramips/mt76x8/config.buildinfo -O .config
+#+end_src
+
+** 配置
+*** 内核和软件
+通过命令"make menuconfig"，对固件的内核以及需要安装的软件进行配置。具体如下：
+- Target Profile (HILINK HLK7628N)
+- Kernel modules -> Network Suport -> kmod-batman-adv <*>
+- Network -> batctl-full <*>，disable batctl-default
+- Network -> wpad-mesh-openssl <*>, disable wpad-basic
+
+或者直接导入以下配置文件：
+#+begin_src
+CONFIG_TARGET_ramips=y
+CONFIG_TARGET_ramips_mt76x8=y
+CONFIG_TARGET_ramips_mt76x8_DEVICE_hilink_hlk-7628n=y
+CONFIG_ALL_KMODS=y
+CONFIG_ALL_NONSHARED=y
+CONFIG_DEVEL=y
+CONFIG_AUTOREMOVE=y
+CONFIG_BUILDBOT=y
+CONFIG_IB=y
+CONFIG_IMAGEOPT=y
+CONFIG_KERNEL_BUILD_DOMAIN="buildhost"
+CONFIG_KERNEL_BUILD_USER="builder"
+# CONFIG_KERNEL_KALLSYMS is not set
+CONFIG_OPENSSL_ENGINE=y
+CONFIG_OPENSSL_PREFER_CHACHA_OVER_GCM=y
+CONFIG_OPENSSL_WITH_ASM=y
+CONFIG_OPENSSL_WITH_CHACHA_POLY1305=y
+CONFIG_OPENSSL_WITH_CMS=y
+CONFIG_OPENSSL_WITH_DEPRECATED=y
+CONFIG_OPENSSL_WITH_ERROR_MESSAGES=y
+CONFIG_OPENSSL_WITH_PSK=y
+CONFIG_OPENSSL_WITH_SRP=y
+CONFIG_OPENSSL_WITH_TLS13=y
+# CONFIG_PACKAGE_batctl-default is not set
+CONFIG_PACKAGE_batctl-full=y
+CONFIG_PACKAGE_cgi-io=y
+CONFIG_PACKAGE_kmod-batman-adv=y
+CONFIG_PACKAGE_kmod-crypto-crc32c=y
+CONFIG_PACKAGE_kmod-crypto-hash=y
+CONFIG_PACKAGE_kmod-lib-crc16=y
+CONFIG_PACKAGE_kmod-lib-crc32c=y
+CONFIG_PACKAGE_libiwinfo-lua=y
+CONFIG_PACKAGE_liblua=y
+CONFIG_PACKAGE_liblucihttp=y
+CONFIG_PACKAGE_liblucihttp-lua=y
+CONFIG_PACKAGE_libopenssl=y
+CONFIG_PACKAGE_librt=y
+CONFIG_PACKAGE_libubus-lua=y
+CONFIG_PACKAGE_lua=y
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-app-firewall=y
+CONFIG_PACKAGE_luci-app-opkg=y
+CONFIG_PACKAGE_luci-base=y
+CONFIG_PACKAGE_luci-lib-ip=y
+CONFIG_PACKAGE_luci-lib-jsonc=y
+CONFIG_PACKAGE_luci-lib-nixio=y
+CONFIG_PACKAGE_luci-mod-admin-full=y
+CONFIG_PACKAGE_luci-mod-network=y
+CONFIG_PACKAGE_luci-mod-status=y
+CONFIG_PACKAGE_luci-mod-system=y
+CONFIG_PACKAGE_luci-proto-ipv6=y
+CONFIG_PACKAGE_luci-proto-ppp=y
+CONFIG_PACKAGE_luci-theme-bootstrap=y
+CONFIG_PACKAGE_rpcd=y
+CONFIG_PACKAGE_rpcd-mod-file=y
+CONFIG_PACKAGE_rpcd-mod-iwinfo=y
+CONFIG_PACKAGE_rpcd-mod-luci=y
+CONFIG_PACKAGE_rpcd-mod-rrdns=y
+CONFIG_PACKAGE_uhttpd=y
+# CONFIG_PACKAGE_wpad-basic is not set
+CONFIG_PACKAGE_wpad-mesh-openssl=y
+CONFIG_SDK=y
+CONFIG_VERSIONOPT=y
+CONFIG_VERSION_BUG_URL=""
+CONFIG_VERSION_CODE=""
+CONFIG_VERSION_DIST="OpenWrt"
+CONFIG_VERSION_FILENAMES=y
+CONFIG_VERSION_HOME_URL=""
+CONFIG_VERSION_HWREV=""
+CONFIG_VERSION_MANUFACTURER=""
+CONFIG_VERSION_MANUFACTURER_URL=""
+CONFIG_VERSION_NUMBER=""
+CONFIG_VERSION_PRODUCT=""
+CONFIG_VERSION_REPO="http://downloads.openwrt.org/releases/19.07.3"
+CONFIG_VERSION_SUPPORT_URL=""
+# CONFIG_COLLECT_KERNEL_DEBUG is not set
+#+end_src
+
+若上述文件为"mydiffconfig"，则通过以下命令可以导入上述配置：
+#+begin_src sh
+cp mydiffconfig .config   # write changes to .config
+make defconfig   # expand to full config
+#+end_src
+
+此外，通过如下命令，可以将修改的配置导出：
+#+begin_src sh
+./scripts/diffconfig.sh > mydiffconfig  # write the changes to mydiffconfig
+#+end_src
+
+*** 自定义配置文件
+参考固件还需要修改固件默认的配置文件，具体包括以下两个文件：
+- /etc/config/network
+- /etc/config/wireless
+
+通过将这两个文件放在当前目录（即openwrt目录）的files子目录中（包含完整路径），即可覆盖固件默认配置文件。
+#+begin_src
+files
+└── etc
+    └── config
+        ├── network
+        └── wireless
+#+end_src
+
+文件network的内容如下：
+#+begin_src
+config interface 'lan'
+	option type 'bridge'
+	option ifname 'eth0.1 bat0'
+	option proto 'static'
+	option netmask '255.255.0.0'
+	option ip6assign '60'
+	option ipaddr '10.20.0.1'
+
+config device 'lan_eth0_1_dev'
+	option name 'eth0.1'
+
+config interface 'wan'
+	option ifname 'eth0.2'
+	option proto 'dhcp'
+
+config device 'wan_eth0_2_dev'
+	option name 'eth0.2'
+
+config switch
+	option name 'switch0'
+	option reset '1'
+	option enable_vlan '1'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '1'
+	option ports '1 2 3 4 6t'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '2'
+	option ports '0 6t'
+
+config interface 'wwan'
+	option proto 'dhcp'
+
+config interface 'bat0'
+        option proto 'batadv'
+        option routing_algo 'BATMAN_IV'
+        option aggregated_ogms 1
+        option ap_isolation 0
+        option bonding 0
+        option fragmentation 1
+        #option gw_bandwidth '10000/2000'
+        option gw_mode 'off'
+        #option gw_sel_class 20
+        option log_level 0
+        option orig_interval 1000
+        option bridge_loop_avoidance 1
+        option distributed_arp_table 1
+        option multicast_mode 1
+        option network_coding 0
+        option hop_penalty 30
+        option isolation_mark '0x00000000/0x00000000'
+
+config interface 'nwi_mesh0'
+        option mtu '2304'
+        option proto 'batadv_hardif'
+        option master 'bat0'
+#+end_src
+
+文件wireless的内容如下：
+#+begin_src
+config wifi-device 'radio0'
+  option type 'mac80211'
+  option channel '11'
+  option path 'platform/10300000.wmac'
+  option hwmode '11ng'
+
+config wifi-iface 'default_radio0'
+  option device 'radio0'
+  option network 'lan'
+  option mode 'ap'
+  option ssid 'Project West Lake'
+  option encryption 'psk2'
+  option key 'projwestlake'
+  option ieee80211r '1'
+  option mobility_domain 'baad'
+  option ft_psk_generate_local '1'
+  option pmk_r1_push '1'
+
+config wifi-iface 'mesh0'
+  option device 'radio0'
+  option ifname 'mesh0'
+  option network 'nwi_mesh0'
+  option mode 'mesh'
+  option mesh_fwding '0'
+  option mesh_id 'mesh_openwrt'
+  option key 'vfrgj1235'
+  option mesh_rssi_threshold '0'
+  option encryption 'sae'
+#+end_src
+
+** 构建
+通过以下命令即可完成固件的构建：
+#+begin_src
+make
+#+end_src
+
+此外，还可以通过下面的命令，提前下载编译需要用到的源代码：
+#+begin_src
+make download
+#+end_src
+
+构建的结果在子目录bin下面，可用来更新的固件位于如下路径：
+: ./bin/targets/ramips/mt76x8/openwrt-19.07.3-ramips-mt76x8-hilink_hlk-7628n-squashfs-sysupgrade.bin
+
+* 参考
+- https://openwrt.org/docs/guide-developer/build-system/use-buildsystem
+- https://openwrt.org/docs/guide-user/additional-software/beginners-build-guide
+- https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
