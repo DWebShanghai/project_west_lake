@@ -1,0 +1,12 @@
+:root {
+  --black: #1b2021;
+  --light-black: #30343f;
+  --pink: #ea638c;
+  --dark-pink: #89023e;
+  --light-pink: #ea638c;
+  --white: #FFFF;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}

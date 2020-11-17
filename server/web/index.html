@@ -1,0 +1,106 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AFRO.NET</title>
+  <link rel="stylesheet" href="./css/global.css">
+  <style>
+    body {
+      background: var(--black);
+    }
+    .main {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .main h1 {
+      font-weight: bold;
+      color: var(--white);
+      font-family: monospace;
+      font-size: 3em;
+    }
+
+    :root {
+        --machine-width: 80vw;
+        --machine-height: calc((var(--machine-width)) * 1.30177);
+        --screen-width: calc(var(--machine-width) * 0.7631);
+        --screen-height: calc(var(--machine-height) * 0.44493);
+      }
+      .main .apple-machine {
+        width: var(--machine-width);
+        height: var(--machine-height);
+        position: relative;
+        /* background: var(--light-pink); */
+      }
+
+      .main .apple-machine .machine {
+        /* clip-path: url("./image/svg/apple.svg"); */
+        width: 100%;
+        height: 100%;
+      }
+
+      .main .apple-machine .screen {
+        position: absolute;
+        object-fit: cover;
+        top: calc((var(--machine-width)) * 0.152926);
+        left: calc((var(--machine-width) - var(--screen-width)) / 2);
+        width: var(--screen-width);
+        height: var(--screen-height);
+        -webkit-mask-box-image: url("./image/svg/apple_machine_screen.svg");
+      }
+      .main .apple-machine .logo {
+        position: absolute;
+        top: calc(var(--machine-height) * .64);
+        left: calc(var(--machine-width) * .1);
+        width: calc(var(--machine-width) * .2);
+      }
+
+    @media screen and (min-width: 480px) {
+      :root {
+        --machine-width: 480px;
+        --machine-height: 624.85px;
+        --screen-width: calc(var(--machine-width) * 0.7631);
+        --screen-height: calc(var(--machine-height) * 0.44493);
+      }
+      .main .apple-machine {
+        width: var(--machine-width);
+        height: var(--machine-height);
+        position: relative;
+        /* background: var(--light-pink); */
+      }
+
+      .main .apple-machine .machine {
+        /* clip-path: url("./image/svg/apple.svg"); */
+        width: 100%;
+        height: 100%;
+      }
+
+      .main .apple-machine .screen {
+        position: absolute;
+        object-fit: cover;
+        top: calc((var(--machine-width)) * 0.152926);
+        left: calc((var(--machine-width) - var(--screen-width)) / 2);
+        width: var(--screen-width);
+        height: var(--screen-height);
+        -webkit-mask-box-image: url("./image/svg/apple_machine_screen.svg");
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>AFRO.NET</h1>
+    <div class="apple-machine">
+      <img class="machine" src="./image/svg/apple_machine.svg" />
+      <img class="screen" src="./image/ins.gif" />
+      <img class="logo" src="./image/svg/apple_logo.svg" />
+    </div>
+  </div>
+</body>
+
+</html>
