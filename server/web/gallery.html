@@ -7,6 +7,7 @@
   <style>
     body {
       background: url("image/svg/bg.svg") repeat;
+      font-family: '04B', Fallback, sans-serif;
     }
     .main {
       width: 100%;
@@ -67,25 +68,26 @@
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
     }
     .main .content .box .cover {
       width: 150px;
       height: auto;
     }
     .main .content .box a {
-      font-family: cursive;
+      font-family: "04B", cursive;
       text-decoration: none;
     }
     .main .content .box.dcl {
       background: url("./image/svg/frame2.svg") no-repeat;
       background-size: contain;
     }
-    .main .content .box.dcl .cover {
+    .main .content .box .cover {
       width: 100px;
       height: auto;
     }
-    .main .content .box.dcl p {
-      font-family: cursive;
+    .main .content .box p {
+      font-family: "04B", cursive;
       font-size: 10px;
       color: #00ff59;
       padding: 0;
@@ -108,28 +110,38 @@
       <img src="./image/svg/title.svg" />
     </div>
     <section class="content">
-      <div class="box dcl">
+      <div class="box dcl" id="metaverse">
         <img class="cover" src="./image/capsule.png" />
-        <p>Mesh Network Metaverse 网状实景</p>
-        <p>（请使用PC端的Chrome浏览器打开）</p>
-        <a id="dcl">Metaverse</a>
+        <a>Mesh Network Metaverse</a>
       </div>
-      <div class="box">
+      <div class="box" id="radio">
         <img class="cover" src="./image/people.png" />
-        <a href="/radio_hls.html">Join Me</a>
+        <a>Join Me</a>
       </div>
-      <div class="box">
-        <a href="/annual.html">ANNUAL MEETING</a>
+      <div class="box" id="annual">
+        <a>ANNUAL MEETING</a>
       </div>
-      <div class="box">
-        <a href="/workshop.html">Creative Workshop</a>
+      <div class="box" id="workshop">
+        <a>Creative Workshop</a>
       </div>
     </section>
   </div>
   <script>
-    const link = document.querySelector('#dcl');
-    link.addEventListener('click', () => {
-      location.href = `http://${location.host.split(':')[0]}:8000`;
+    document.querySelector('#metaverse').addEventListener('click', () => {
+      if(window.confirm('需要使用PC端的Chrome浏览器进入网状实景，点击取消进入观看效果视频')) {
+        location.href = `http://${location.host.split(':')[0]}:8000`;
+      } else {
+        location.href = `/video.html`;
+      }
+    });
+    document.querySelector('#radio').addEventListener('click', () => {
+      location.href = `/radio_hls.html`;
+    });
+    document.querySelector('#annual').addEventListener('click', () => {
+      location.href = `/annual.html`;
+    });
+    document.querySelector('#workshop').addEventListener('click', () => {
+      location.href = `/workshop.html`;
     });
   </script>
 </body>

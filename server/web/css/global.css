@@ -7,12 +7,16 @@
   --white: #f1f1f1;
 }
 @font-face {
-  font-family: "krungthep";
-  src: url("../fonts/krungthep.ttf");
-}
-@font-face {
   font-family: "04B";
-  src: url("../fonts/04B.ttf");
+  src: url("../fonts/04B.eot"); /* IE9 Compat Modes */
+  src: url("../fonts/04B.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/04B.otf") format("opentype"), /* Open Type Font */
+    url("../fonts/04B.svg") format("svg"), /* Legacy iOS */
+    url("../fonts/04B.ttf") format("truetype"), /* Safari, Android, iOS */
+    url("../fonts/04B.woff") format("woff"), /* Modern Browsers */
+    url("../fonts/04B.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
 }
 html, body {
   margin: 0;
