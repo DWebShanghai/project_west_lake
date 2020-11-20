@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>敢为天下仙</title>
+  <link rel="stylesheet" href="./css/global.css">
+  <script src="./js/flv.min.js"></script>
+  <style>
+    body {
+      background: var(--black);
+    }
+    #video {
+      display: none;
+    }
+    .main {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .main .live-box {
+      max-width: 80vw;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+    }
+    .main .live-box .logo {
+      width: 100%;
+      height: auto; 
+    }
+    .main .live-box .play-button {
+      width: 200px;
+      height: 88px;
+      background: url("./image/play_btn.png") no-repeat center / 50% 50%;
+      transition: background-image 1s;
+    }
+    .main .live-box .play-button.active {
+      background: url("./image/play.gif") no-repeat center / 100% 100%;
+    }
+    @media screen and (min-width: 480px) {
+      .main .live-box {
+        max-width: 480px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <video id="video"></video>
+  <div class="main">
+    <div class="live-box">
+      <img class="logo" src="./image/logo.gif" alt="logo" />
+      <div class="play-button"></div>
+    </div>
+  </div>
+  <script>
+    const video = document.getElementById('video');
+    // const videoSrc = `http://${location.host.split(':')[0]}:8989/live/PARROT_ACTOR/index.m3u8`;
+    const videoSrc = `http://10.20.0.211:8989/live/PARROT_ACTOR/index.m3u8`;
+    if (flvjs.isSupported()) {
+      const videoElement = document.getElementById('video');
+      const flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        // url: `http://${location.host.split(':')[0]}:8989/live/PARROT_ACTOR.flv`,
+        url: 'http://10.20.0.211:8989/live/PARROT_ACTOR.flv',
+      });
+      flvPlayer.attachMediaElement(videoElement);
+      flvPlayer.load();
+      const playBtn = document.querySelector('.play-button');
+      playBtn.addEventListener('click', () => {
+        if(playBtn.classList.contains('active')) {
+          video.pause();
+          playBtn.classList.remove('active');
+        } else {
+          video.play();
+          playBtn.classList.add('active');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

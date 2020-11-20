@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./css/global.css">
   <style>
     body {
-      background: var(--black);
+      background: url("image/svg/bg.svg") repeat;
     }
     .main {
       width: 100%;
@@ -94,13 +94,18 @@
 
 <body>
   <div class="main">
-    <h1>AFRO.NET</h1>
+    <!-- <h1>AFRO.NET</h1> -->
     <div class="apple-machine">
       <img class="machine" src="./image/svg/apple_machine.svg" />
-      <img class="screen" src="./image/ins.gif" />
+      <img class="screen" src="./image/logo.gif" />
       <img class="logo" src="./image/svg/apple_logo.svg" />
     </div>
   </div>
+  <script>
+    document.querySelector('.screen').addEventListener('click', () => {
+      location.href = '/gallery.html';
+    });
+  </script>
 </body>
 
 </html>

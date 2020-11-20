@@ -17,6 +17,6 @@ app.use('/**', function (req, res) {
   res.sendFile('./web/index.html', { root: __dirname, maxAge: 0 });
 });
 
-app.listen(5000, () => {
+app.listen(3000, () => {
   console.log('server start');
 });

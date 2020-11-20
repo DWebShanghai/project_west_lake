@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="10px"
+   height="10px"
+   viewBox="0 0 51.282673 51.282669"
+   version="1.1"
+   id="svg2652"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="bg.svg">
+  <defs
+     id="defs2646" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.36914446"
+     inkscape:cx="-653.04416"
+     inkscape:cy="153.04434"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     showborder="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2649">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-72.553055,-107.67368)">
+    <rect
+       style="opacity:0.940983;fill:#1b2021;fill-opacity:1;stroke:none;stroke-width:2.38125;stroke-linejoin:round;paint-order:fill markers stroke"
+       id="rect1766"
+       width="25.641348"
+       height="25.641348"
+       x="72.553055"
+       y="107.67368" />
+    <rect
+       style="opacity:0.940983;fill:#1b2021;fill-opacity:1;stroke:none;stroke-width:2.38125;stroke-linejoin:round;paint-order:fill markers stroke"
+       id="rect1766-1"
+       width="25.641348"
+       height="25.641348"
+       x="98.194382"
+       y="133.315" />
+  </g>
+</svg>
